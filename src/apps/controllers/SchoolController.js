@@ -1,18 +1,14 @@
-const { FirestoreModel, HighSchoolModel, ImageActivityModel } = require("../models");
+const { FirestoreModel, ImageActivityModel } = require("../models");
 const { CollectionNameConstant } = require("../../constants");
 
 class SchoolController {
   constructor() {
-    this.highSchoolDbRef = new FirestoreModel(CollectionNameConstant.HighSchools, HighSchoolModel);
     this.imageActivityDbRef = new FirestoreModel(CollectionNameConstant.ImageActivity, ImageActivityModel);
     this.index = this.index.bind(this);
   }
 
   async index(req, res, next) {
-    let [highSchool, imgStudentDancings, imgStudentCampings, imgStudentActivitys, imgStudentAchievements, imgSchool] = await Promise.all([
-      this.highSchoolDbRef.getItemByFilter({
-        name: "Trường THPT Duy Tân"
-      }),
+    let [imgStudentDancings, imgStudentCampings, imgStudentActivitys, imgStudentAchievements, imgSchool] = await Promise.all([
       this.imageActivityDbRef.getItemsByFilter({
         type: "dance"
       }),
@@ -42,8 +38,7 @@ class SchoolController {
       imgStudentDancings: imgStudentDancings,
       imgStudentCampings: imgStudentCampings,
       imgSchool: imgSchool,
-      imgStudentActivitys: imgStudentActivitys,
-      highSchool: highSchool
+      imgStudentActivitys: imgStudentActivitys
     });
   }
 
