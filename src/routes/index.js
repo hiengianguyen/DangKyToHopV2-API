@@ -4,6 +4,7 @@ const meRouter = require("./meRoute");
 const schoolRouter = require("./schoolRoute");
 const combinationRouter = require("./combinationRoute");
 const fileRouter = require("./fileRoute");
+const classmateRoute = require("./classmateRoute");
 const notfoundRouter = require("./notfoundRoute");
 const maintenanceRouter = require("./maintenanceRoute");
 const notiRouter = require("./notiRoute");
@@ -17,6 +18,7 @@ function routes(app) {
   app.use("/combination", combinationRouter);
   app.use("/school", schoolRouter);
   app.use("/file", fileRouter);
+  app.use("/ad", classmateRoute);
   app.get("/healthz", (req, res, next) => res.sendStatus(200));
   app.use(notfoundRouter);
 }

@@ -41,19 +41,19 @@ function filterSubmittedList(data, filter) {
   //filter Approve
   if (filter.status !== "Tất cả") {
     switch (filter.status) {
-      case "approved":
+      case "Đã phê duyệt":
         result = result.filter((doc) => {
-          return doc.status === filter.status;
+          return doc.status === "approved";
         });
         break;
-      case "reject":
+      case "Đã huỷ phê duyệt":
         result = result.filter((doc) => {
-          return doc.status === filter.status;
+          return doc.status === "rejected";
         });
         break;
       default:
         result = result.filter((doc) => {
-          return doc.status === filter.status;
+          return doc.status === "submitted";
         });
         break;
     }
