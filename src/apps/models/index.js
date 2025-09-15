@@ -1,6 +1,5 @@
 const FirestoreModel = require("../models/FirestoreModel");
 const CombinationModel = require("../models/CombinationModel");
-const HighSchoolModel = require("../models/HighSchoolModel");
 const SecondarySchoolModel = require("../models/SecondarySchoolModel");
 const UserModel = require("../models/UserModel");
 const NationModel = require("../models/NationModel");
@@ -13,7 +12,6 @@ const UserNotificationModel = require("./UserNotificationModel");
 module.exports = {
   FirestoreModel,
   CombinationModel,
-  HighSchoolModel,
   SecondarySchoolModel,
   UserModel,
   NationModel,
