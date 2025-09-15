@@ -6,11 +6,11 @@ function filterSubmittedList(data, filter) {
 
   //filter combination 1,2.
   if (filter.combination1 === "Tất cả" && filter.combination2 !== "Tất cả") {
-    result = data.filter((doc, index) => {
+    result = data.filter((doc) => {
       return doc.combination2.includes(filter.combination2);
     });
   } else if (filter.combination2 === "Tất cả" && filter.combination1 !== "Tất cả") {
-    result = data.filter((doc, index) => {
+    result = data.filter((doc) => {
       return doc.combination1.includes(filter.combination1);
     });
   } else {

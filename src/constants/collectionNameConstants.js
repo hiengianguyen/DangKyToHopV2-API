@@ -1,6 +1,5 @@
 const CollectionNameConstant = {
   Users: "users",
-  HighSchools: "highSchools",
   SecondarySchools: "secondarySchools",
   Combinations: "combinations",
   SubmittedCombinations: "submittedCombinations",
