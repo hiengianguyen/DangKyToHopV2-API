@@ -5,5 +5,6 @@ const router = express.Router();
 router.get("/students", ClassmateController.studentList);
 router.get("/classes", ClassmateController.classes);
 router.post("/classes/create", ClassmateController.createClass);
+router.post("/student/add/class", ClassmateController.studentAddClass);
 
 module.exports = router;

@@ -8,6 +8,7 @@ class ClassmateController {
     this.studentList = this.studentList.bind(this);
     this.classes = this.classes.bind(this);
     this.createClass = this.createClass.bind(this);
+    this.studentAddClass = this.studentAddClass.bind(this);
   }
 
   async studentList(req, res, next) {
@@ -22,6 +23,27 @@ class ClassmateController {
     } else {
       return res.json({
         redirect: "/auth/signin"
+      });
+    }
+  }
+
+  async studentAddClass(req, res, next) {
+    const { studentId, classId } = req.body;
+
+    try {
+      const ok = await this.registeredCombinationsDbRef.updateItem(studentId, { classId: classId });
+      if (ok) {
+        return res.json({
+          message: "Đã thêm học sinh vào lớp học"
+        });
+      } else {
+        return res.json({
+          message: "Có lỗi khi thêm học sinh vào lớp học"
+        });
+      }
+    } catch {
+      return res.json({
+        message: "Có lỗi khi thêm học sinh vào lớp học"
       });
     }
   }
