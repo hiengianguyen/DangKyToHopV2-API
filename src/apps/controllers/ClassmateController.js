@@ -9,6 +9,7 @@ class ClassmateController {
     this.classes = this.classes.bind(this);
     this.createClass = this.createClass.bind(this);
     this.updateClass = this.updateClass.bind(this);
+    this.deleteClass = this.deleteClass.bind(this);
     this.studentAddClass = this.studentAddClass.bind(this);
   }
 
@@ -98,6 +99,27 @@ class ClassmateController {
         combination1,
         combination2
       });
+      if (ok) {
+        return res.json({
+          isSuccess: true
+        });
+      } else {
+        return res.json({
+          isSuccess: true
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.json({
+        isSuccess: false
+      });
+    }
+  }
+
+  async deleteClass(req, res, next) {
+    const { id } = req.body;
+    try {
+      const ok = await this.classesDbRef.hardDeleteItem(id);
       if (ok) {
         return res.json({
           isSuccess: true
