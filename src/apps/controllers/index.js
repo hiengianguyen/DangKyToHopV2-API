@@ -4,7 +4,6 @@ const HomeController = require("../controllers/HomeController");
 const CombinationController = require("../controllers/CombinationController");
 const SchoolController = require("../controllers/SchoolController");
 const FileController = require("../controllers/FileController");
-const NotfoundController = require("../controllers/NotfoundController");
 const MaintenanceController = require("../controllers/MaintenanceController");
 const NotificationController = require("../controllers/NotificationController");
 const ClassmateController = require("./ClassmateController");
@@ -16,7 +15,6 @@ module.exports = {
   CombinationController,
   SchoolController,
   FileController,
-  NotfoundController,
   MaintenanceController,
   NotificationController,
   ClassmateController
