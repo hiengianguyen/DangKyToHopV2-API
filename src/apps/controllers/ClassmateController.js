@@ -8,6 +8,7 @@ class ClassmateController {
     this.studentList = this.studentList.bind(this);
     this.classes = this.classes.bind(this);
     this.createClass = this.createClass.bind(this);
+    this.updateClass = this.updateClass.bind(this);
     this.studentAddClass = this.studentAddClass.bind(this);
   }
 
@@ -67,7 +68,6 @@ class ClassmateController {
     const classModel = new ClassesModel(null, name, teacher, combination1, combination2, false);
     try {
       const ok = await this.classesDbRef.addItem(classModel);
-
       if (ok) {
         return res.json({
           isSuccess: true,
@@ -84,6 +84,33 @@ class ClassmateController {
       return res.json({
         isSuccess: false,
         message: "Có lỗi khi tạo lớp. Hảy thử lại"
+      });
+    }
+  }
+
+  async updateClass(req, res, next) {
+    const id = req.params.id;
+    const { name, teacher, combination1, combination2 } = req.body;
+    try {
+      const ok = await this.classesDbRef.updateItem(id, {
+        name,
+        teacher,
+        combination1,
+        combination2
+      });
+      if (ok) {
+        return res.json({
+          isSuccess: true
+        });
+      } else {
+        return res.json({
+          isSuccess: true
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.json({
+        isSuccess: false
       });
     }
   }
