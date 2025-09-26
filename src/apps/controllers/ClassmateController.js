@@ -114,6 +114,27 @@ class ClassmateController {
       });
     }
   }
+
+  async deleteClass(req, res, next) {
+    const { id } = req.body;
+    try {
+      const ok = await this.classesDbRef.hardDeleteItem(id);
+      if (ok) {
+        return res.json({
+          isSuccess: true
+        });
+      } else {
+        return res.json({
+          isSuccess: true
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.json({
+        isSuccess: false
+      });
+    }
+  }
 }
 
 module.exports = new ClassmateController();
