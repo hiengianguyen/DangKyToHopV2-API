@@ -9,6 +9,7 @@ class ClassmateController {
     this.classes = this.classes.bind(this);
     this.createClass = this.createClass.bind(this);
     this.updateClass = this.updateClass.bind(this);
+    this.deleteClass = this.deleteClass.bind(this);
     this.studentAddClass = this.studentAddClass.bind(this);
   }
 
