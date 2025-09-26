@@ -16,7 +16,8 @@ class ClassmateController {
   async studentList(req, res, next) {
     if (req?.cookies?.isLogin === "true") {
       const studentListApproved = await this.registeredCombinationsDbRef.getItemsByFilter({
-        status: "approved"
+        status: "approved",
+        classId: ""
       });
 
       return res.json({
