@@ -1,5 +1,7 @@
 const { RegisteredCombinationModel, FirestoreModel, ClassesModel } = require("../models");
 const { CollectionNameConstant } = require("../../constants");
+const { countClassStudent } = require("../../utils/countClassStudent");
+const { filterStudentList } = require("../../utils/filterStudentList");
 
 class ClassmateController {
   constructor() {
@@ -11,17 +13,22 @@ class ClassmateController {
     this.updateClass = this.updateClass.bind(this);
     this.deleteClass = this.deleteClass.bind(this);
     this.studentAddClass = this.studentAddClass.bind(this);
+    this.classDetail = this.classDetail.bind(this);
   }
 
   async studentList(req, res, next) {
     if (req?.cookies?.isLogin === "true") {
-      const studentListApproved = await this.registeredCombinationsDbRef.getItemsByFilter({
-        status: "approved",
-        classId: ""
-      });
-
+      const [studentList, allStudents] = await Promise.all([
+        this.registeredCombinationsDbRef.getItemsByFilter({
+          status: "approved",
+          classId: ""
+        }),
+        this.registeredCombinationsDbRef.getAllItems()
+      ]);
+      const countStudentInClass = countClassStudent(allStudents);
       return res.json({
-        studentList: studentListApproved
+        studentList: studentList,
+        classStudentCount: countStudentInClass
       });
     } else {
       return res.json({
@@ -53,10 +60,15 @@ class ClassmateController {
 
   async classes(req, res, next) {
     if (req?.cookies?.isLogin === "true") {
-      const classes = await this.classesDbRef.getAllItems({ fieldName: "name", type: "asc" });
+      const [classes, students] = await Promise.all([
+        this.classesDbRef.getAllItems({ fieldName: "name", type: "asc" }),
+        this.registeredCombinationsDbRef.getAllItems()
+      ]);
+      const countStudentInClass = countClassStudent(students);
 
       return res.json({
-        classes: classes
+        classes: classes,
+        countStudentInClass: countStudentInClass
       });
     } else {
       res.json({
@@ -136,6 +148,29 @@ class ClassmateController {
         isSuccess: false
       });
     }
+  }
+
+  async classDetail(req, res, next) {
+    const id = req.params.id;
+    const [classDetail, students] = await Promise.all([
+      this.classesDbRef.getItemById(id),
+      this.registeredCombinationsDbRef.getItemsByFilter({ classId: id })
+    ]);
+
+    return res.json({
+      students: students,
+      classDetail: classDetail
+    });
+  }
+
+  async studentSort(req, res, next) {
+    const { studentList, ...filter } = req.body;
+    const finalData = filterStudentList(studentList, filter);
+
+    return res.json({
+      isSuccess: true,
+      studentListAfterSort: finalData
+    });
   }
 }
 
