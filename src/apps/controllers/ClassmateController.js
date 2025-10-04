@@ -81,16 +81,17 @@ class ClassmateController {
     const { name, teacher, combination1, combination2 } = req.body;
     const classModel = new ClassesModel(null, name, teacher, combination1, combination2, false);
     try {
-      const ok = await this.classesDbRef.addItem(classModel);
-      if (ok) {
+      const doc = await this.classesDbRef.addItem(classModel);
+      if (doc) {
         return res.json({
           isSuccess: true,
+          docAfter: doc,
           message: "Tạo lớp học mới thành công!"
         });
       } else {
         return res.json({
-          isSuccess: true,
-          message: "Tạo lớp học mới thành công!"
+          isSuccess: false,
+          message: "Tạo lớp học mới không thành công!"
         });
       }
     } catch (error) {
@@ -114,6 +115,7 @@ class ClassmateController {
       });
       if (ok) {
         return res.json({
+          docAfter: ok,
           isSuccess: true
         });
       } else {
