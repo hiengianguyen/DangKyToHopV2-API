@@ -361,6 +361,7 @@ class CombinationController {
     if (ok) {
       return res.json({
         isSuccess: true,
+        docAfter: { ...ok, id: combinationId },
         message: "Cập nhật thông tin tổ hợp thành công"
       });
     } else {
