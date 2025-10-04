@@ -5,11 +5,9 @@ const schoolRouter = require("./schoolRoute");
 const combinationRouter = require("./combinationRoute");
 const fileRouter = require("./fileRoute");
 const classmateRoute = require("./classmateRoute");
-const maintenanceRouter = require("./maintenanceRoute");
 const notiRouter = require("./notiRoute");
 
 function routes(app) {
-  app.use(maintenanceRouter);
   app.use("/", homeRouter);
   app.use("/me", meRouter);
   app.use("/notification", notiRouter);
