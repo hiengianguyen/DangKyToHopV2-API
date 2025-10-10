@@ -62,7 +62,7 @@ class ClassmateController {
     if (req?.cookies?.isLogin === "true") {
       const [classes, students] = await Promise.all([
         this.classesDbRef.getAllItems({ fieldName: "name", type: "asc" }),
-        this.registeredCombinationsDbRef.getAllItems()
+        this.registeredCombinationsDbRef.getItemsByFilter({ status: "approved" })
       ]);
       const countStudentInClass = countClassStudent(students);
 
@@ -156,7 +156,7 @@ class ClassmateController {
     const id = req.params.id;
     const [classDetail, students] = await Promise.all([
       this.classesDbRef.getItemById(id),
-      this.registeredCombinationsDbRef.getItemsByFilter({ classId: id })
+      this.registeredCombinationsDbRef.getItemsByFilter({ classId: id, status: "approved" })
     ]);
 
     return res.json({
