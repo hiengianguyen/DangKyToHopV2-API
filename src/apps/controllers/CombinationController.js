@@ -204,7 +204,11 @@ class CombinationController {
     if (docSubmitedSaved) {
       await this.favouriteSubmittedDbRef.updateItem(docSubmitedSaved.id, { isDeleted: false });
     } else {
-      const favouriteSubmittedModal = new FavouriteSubmittedModel(undefined, userId, docId, undefined);
+      const data = {
+        userId: userId,
+        docId: docId
+      };
+      const favouriteSubmittedModal = new FavouriteSubmittedModel(data);
       await this.favouriteSubmittedDbRef.addItem(favouriteSubmittedModal);
     }
 
@@ -378,13 +382,12 @@ class CombinationController {
     const docSubmited = await this.registeredCombinationsDbRef.getItemByFilter({
       userId: userId
     });
-    const userNotificationModel = new UserNotificationModel(
-      null, //id
-      userId,
-      "omtURp0ycFYGKXDx5Mgm",
-      convertToVietnameseDateTime(currTime),
-      null //isDeleted
-    );
+    const data = {
+      userId: userId,
+      notificationId: "omtURp0ycFYGKXDx5Mgm",
+      publishAt: convertToVietnameseDateTime(currTime)
+    };
+    const userNotificationModel = new UserNotificationModel(data);
     const submittedId = docSubmited.id;
 
     await Promise.all([
