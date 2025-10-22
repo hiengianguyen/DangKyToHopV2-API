@@ -206,7 +206,7 @@ class CombinationController {
     } else {
       const data = {
         userId: userId,
-        docId: docId
+        submittedId: docId
       };
       const favouriteSubmittedModal = new FavouriteSubmittedModel(data);
       await this.favouriteSubmittedDbRef.addItem(favouriteSubmittedModal);
@@ -239,7 +239,7 @@ class CombinationController {
       isDeleted: false
     });
 
-    if (allDocSubmittedSaved) {
+    if (allDocSubmittedSaved.length) {
       allDocSubmittedSaved = await Promise.all(
         allDocSubmittedSaved.map((docSaved) => this.registeredCombinationsDbRef.getItemById(docSaved.submittedId))
       );
@@ -314,14 +314,6 @@ class CombinationController {
           mostChooseOfCombination2.combination = `Tổ hợp ${i + 1}`;
         }
       }
-
-      const combinationsInfo = combinations.map((combinationName, index) => {
-        return {
-          name: combinationName,
-          countCombinaton1: countCombinaton1[index],
-          countCombinaton2: countCombinaton2[index]
-        };
-      });
 
       classesCapacitys = classesCapacitys.map((max, i) => max - countCombinaton1[i]);
 
