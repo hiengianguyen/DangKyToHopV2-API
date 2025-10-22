@@ -78,8 +78,7 @@ class ClassmateController {
   }
 
   async createClass(req, res, next) {
-    const { name, teacher, combination1, combination2 } = req.body;
-    const classModel = new ClassesModel(null, name, teacher, combination1, combination2, false);
+    const classModel = new ClassesModel(req.body);
     try {
       const doc = await this.classesDbRef.addItem(classModel);
       if (doc) {
