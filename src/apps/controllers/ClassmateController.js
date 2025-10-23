@@ -163,7 +163,7 @@ class ClassmateController {
 
     students = students.map((item) => item.id);
     try {
-      const [deleteClass, updateField] = await Promise.all(
+      await Promise.all(
         this.classesDbRef.hardDeleteItem(id),
         Promise.all(
           students.map((item) =>
@@ -173,15 +173,9 @@ class ClassmateController {
           )
         )
       );
-      if (deleteClass && updateField) {
-        return res.json({
-          isSuccess: true
-        });
-      } else {
-        return res.json({
-          isSuccess: true
-        });
-      }
+      return res.json({
+        isSuccess: true
+      });
     } catch (error) {
       console.log(error);
       return res.json({
