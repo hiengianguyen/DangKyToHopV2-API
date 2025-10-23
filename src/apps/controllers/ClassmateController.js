@@ -15,6 +15,7 @@ class ClassmateController {
     this.studentAddClass = this.studentAddClass.bind(this);
     this.classDetail = this.classDetail.bind(this);
     this.classChange = this.classChange.bind(this);
+    this.deleteClassHadStudent = this.deleteClassHadStudent.bind(this);
   }
 
   async studentList(req, res, next) {
@@ -136,6 +137,43 @@ class ClassmateController {
     try {
       const ok = await this.classesDbRef.hardDeleteItem(id);
       if (ok) {
+        return res.json({
+          isSuccess: true
+        });
+      } else {
+        return res.json({
+          isSuccess: true
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.json({
+        isSuccess: false
+      });
+    }
+  }
+
+  async deleteClassHadStudent(req, res, next) {
+    const { id } = req.body;
+
+    let students = await this.registeredCombinationsDbRef.getItemsByFilter({
+      classId: id,
+      isDeleted: false
+    });
+
+    students = students.map((item) => item.id);
+    try {
+      const [deleteClass, updateField] = await Promise.all(
+        this.classesDbRef.hardDeleteItem(id),
+        Promise.all(
+          students.map((item) =>
+            this.registeredCombinationsDbRef.updateItem(item, {
+              classId: ""
+            })
+          )
+        )
+      );
+      if (deleteClass && updateField) {
         return res.json({
           isSuccess: true
         });
