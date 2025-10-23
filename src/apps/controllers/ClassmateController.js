@@ -14,6 +14,7 @@ class ClassmateController {
     this.deleteClass = this.deleteClass.bind(this);
     this.studentAddClass = this.studentAddClass.bind(this);
     this.classDetail = this.classDetail.bind(this);
+    this.classChange = this.classChange.bind(this);
   }
 
   async studentList(req, res, next) {
@@ -172,6 +173,31 @@ class ClassmateController {
       isSuccess: true,
       studentListAfterSort: finalData
     });
+  }
+
+  async classChange(req, res, next) {
+    const { newClass, studentId } = req?.body;
+
+    const classFilter = await this.classesDbRef.getItemByFilter({
+      name: newClass,
+      isDeleted: false
+    });
+
+    const respon = await this.registeredCombinationsDbRef.updateItem(studentId, {
+      classId: classFilter.id
+    });
+
+    if (respon) {
+      return res.json({
+        isSuccess: true,
+        message: "Chuyển lớp thành công!"
+      });
+    } else {
+      return res.json({
+        isSuccess: false,
+        message: "Chuyển lớp không thành công!"
+      });
+    }
   }
 }
 
