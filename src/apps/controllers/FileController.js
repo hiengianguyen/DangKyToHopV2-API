@@ -149,17 +149,11 @@ class FileController {
   }
 
   async exportSubmitedPDF(req, res, next) {
-    const userId = req?.params?.userId ?? req?.cookies?.userId;
+    const userId = req?.params?.userId || req?.cookies?.userId;
+    const templateId = req?.query?.template;
     const data = await this.registeredCombinationsDbRef.getItemByFilter({
       userId: userId
     });
-
-    const registeredAt = data.registeredAt;
-    const registeredDay = registeredAt.split(" ")[1];
-    const [day, month, year] = registeredDay.split("/");
-    data.registeredDay = day;
-    data.registeredMonth = month;
-    data.registeredYear = year;
 
     const options = {
       method: "POST",
@@ -195,7 +189,7 @@ class FileController {
     require.write(
       JSON.stringify({
         template: {
-          id: process.env.GENERATOR_PDF_TEMPLATE_ID,
+          id: templateId,
           data: data
         },
         format: "pdf",
