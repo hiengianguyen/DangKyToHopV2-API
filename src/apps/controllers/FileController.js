@@ -167,7 +167,7 @@ class FileController {
     };
 
     let PDFUrl;
-    const require = http.request(options, function (response) {
+    const reqPDF = http.request(options, function (response) {
       const chunks = [];
 
       response.on("data", function (chunk) {
@@ -186,11 +186,11 @@ class FileController {
       });
     });
 
-    require.write(
+    reqPDF.write(
       JSON.stringify({
         template: {
           id: templateId,
-          data: data
+          data: [data]
         },
         format: "pdf",
         output: "url",
@@ -198,7 +198,7 @@ class FileController {
       })
     );
 
-    require.end();
+    reqPDF.end();
   }
 }
 
