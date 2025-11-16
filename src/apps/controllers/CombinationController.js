@@ -43,7 +43,13 @@ class CombinationController {
     if (req?.cookies?.isLogin === "true") {
       const data = req?.body;
       if (data) {
-        const avatar = await uploadImageToCloudinary(data.avatar, "users");
+        const [signatureParents, signatureStudent, avatar] = await Promise.all([
+          uploadImageToCloudinary(data.signatureParents, "signatures"),
+          uploadImageToCloudinary(data.signatureStudent, "signatures"),
+          uploadImageToCloudinary(data.avatar, "users")
+        ]);
+        data.signatureParents = signatureParents.data;
+        data.signatureStudent = signatureStudent.data;
         data.avatar = avatar.data;
         data.registeredAt = convertToVietnameseDateTime(new Date());
         const submitedCombinationModel = new RegisteredCombinationModel(data);
