@@ -375,7 +375,7 @@ class CombinationController {
   }
 
   async submitedApprove(req, res, next) {
-    const userId = req.body.userId;
+    const userId = req.params.id;
     const currTime = new Date();
     const docSubmited = await this.registeredCombinationsDbRef.getItemByFilter({
       userId: userId
