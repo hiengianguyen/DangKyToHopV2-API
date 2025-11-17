@@ -113,7 +113,7 @@ class CombinationController {
 
   async submitedDetail(req, res, next) {
     if (req?.cookies?.isLogin === "true" && req?.params?.userId) {
-      const userId = req?.params?.userId;
+      const userId = req?.params?.userId || req?.cookies?.userId;
       const data = await this.registeredCombinationsDbRef.getItemByFilter({
         userId: userId
       });
@@ -123,7 +123,7 @@ class CombinationController {
         typeBadge: ""
       };
 
-      switch (data.status) {
+      switch (data?.status) {
         case "approved":
           badge.status = "Đã phê duyệt";
           badge.typeBadge = "success";
