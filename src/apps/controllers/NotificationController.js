@@ -26,11 +26,14 @@ class NotificationController {
       ]);
       const publishAt = notiSubmittedStatus?.publishAt;
 
-      notiSubmittedStatus = await this.notiDBRef.getItemById(notiSubmittedStatus?.notificationId || "");
-      if (notiSubmittedStatus) {
-        notiSubmittedStatus.publishAt = publishAt;
+      if(notiSubmittedStatus?.notificationId) {
+        notiSubmittedStatus = await this.notiDBRef.getItemById(notiSubmittedStatus.notificationId);
+        if (notiSubmittedStatus) {
+          notiSubmittedStatus.publishAt = publishAt;
+        }
+      } else {
+        notiSubmittedStatus = {};
       }
-
       return res.json({
         isSuccess: true,
         notiSubmittedStatus: notiSubmittedStatus,
