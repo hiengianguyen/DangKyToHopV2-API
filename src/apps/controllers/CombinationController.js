@@ -76,6 +76,9 @@ class CombinationController {
   }
 
   async submitedList(req, res, next) {
+    console.log("req?.cookies?.isLogin", req?.cookies?.isLogin);
+    console.log("req?.cookies?.isLogin === 'true'", req?.cookies?.isLogin === "true");
+
     if (req?.cookies?.isLogin === "true") {
       const userId = req?.cookies?.userId;
       let [data, allIdDocSaved] = await Promise.all([
