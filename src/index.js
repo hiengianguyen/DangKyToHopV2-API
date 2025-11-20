@@ -8,10 +8,10 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 4001;
 
-const whitelist = ["http://localhost:3000"];
+const whitelist = [process.env.UI_LOCAL_ENDPOINT, process.env.UI_PROD_ENDPOINT];
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
+    if (origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
