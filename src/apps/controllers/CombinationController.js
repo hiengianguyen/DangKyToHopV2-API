@@ -387,9 +387,15 @@ class CombinationController {
     if (req?.cookies?.isLogin === "true" && req?.cookies?.userId) {
       const combinations = await this.combinationDbRef.getAllItems();
       combinations.sort((a, b) => (a.name > b.name ? 1 : -1));
+      const combinationLength = combinations.length;
+      const classesCapacitys = combinations.reduce((a,b) => a + b.classesCapacity,0)
+      const classCount = combinations.reduce((a,b) => a + Number(b.classesCount), 0)
       return res.json({
         isSuccess: true,
-        combinations: combinations
+        combinationLength: combinationLength,
+        classesCapacitys: classesCapacitys,
+        combinations: combinations,
+        classCount: classCount
       });
     } else {
       return res.json({ isSuccess: false });
