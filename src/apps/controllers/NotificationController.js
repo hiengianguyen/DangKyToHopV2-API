@@ -26,7 +26,7 @@ class NotificationController {
       ]);
       const publishAt = notiSubmittedStatus?.publishAt;
 
-      if(notiSubmittedStatus?.notificationId) {
+      if (notiSubmittedStatus?.notificationId) {
         notiSubmittedStatus = await this.notiDBRef.getItemById(notiSubmittedStatus.notificationId);
         if (notiSubmittedStatus) {
           notiSubmittedStatus.publishAt = publishAt;
