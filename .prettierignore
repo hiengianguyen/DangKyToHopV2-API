@@ -1,5 +1,0 @@
-# ignore format below files:
-*.hbs
-*.css
-*.md
-node_modules/
