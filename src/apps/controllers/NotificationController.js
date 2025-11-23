@@ -107,21 +107,33 @@ class NotificationController {
   }
 
   async createNoti(req, res, next) {
-    const { title = null, message = null, fileUrl = null, type = "text" } = req.body;
-    let typeNoti = type;
+    const {
+      title = "",
+      subTitle = "",
+      message = "",
+      fileUrl = "",
+      type = "text",
+      typeNoti = "Tuyển sinh",
+      registeredBy = "Admin hệ thống"
+    } = req.body;
+
+    let typeNotification = type;
     if (fileUrl) {
-      typeNoti = "file";
+      typeNotification = "file";
     }
+
     const currentTime = new Date();
     const data = {
       title: title,
+      subTitle: subTitle,
       message: message,
       fileUrl: fileUrl,
-      type: type,
+      type: typeNotification,
+      typeNoti: typeNoti,
+      registeredBy: registeredBy,
       publishAt: convertToVietnameseDateTime(currentTime)
     };
     const notificationModel = new NotificationModel(data);
-
     const response = await this.notiDBRef.addItem(notificationModel);
     if (response) {
       return res.json({
@@ -138,19 +150,30 @@ class NotificationController {
 
   async updateNoti(req, res, next) {
     const id = req?.params?.id;
-    const { title = null, message = null, fileUrl = null, type = "text" } = req.body;
+    const {
+      title = "",
+      subTitle = "",
+      message = "",
+      fileUrl = "",
+      type = "text",
+      typeNoti = "Tuyển sinh",
+      registeredBy = "Admin hệ thống"
+    } = req.body;
 
-    let typeNoti = type;
+    let typeNotification = type;
     if (fileUrl) {
-      typeNoti = "file";
+      typeNotification = "file";
     }
 
     const currentTime = new Date();
     const response = await this.notiDBRef.updateItem(id, {
       title: title,
       message: message,
+      subTitle: subTitle,
       fileUrl: fileUrl,
-      type: typeNoti,
+      type: typeNotification,
+      typeNoti: typeNoti,
+      registeredBy: registeredBy,
       publishAt: convertToVietnameseDateTime(currentTime)
     });
     if (response) {
