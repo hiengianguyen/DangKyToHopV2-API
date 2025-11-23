@@ -138,6 +138,7 @@ class NotificationController {
     if (response) {
       return res.json({
         message: "Gữi thông báo thành công",
+        id: response.id,
         isSuccess: true
       });
     } else {
