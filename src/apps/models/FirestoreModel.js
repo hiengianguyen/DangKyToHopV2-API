@@ -96,7 +96,7 @@ class FirestoreModel {
       const addedDoc = await this.collectionRef.add(data);
       const afterDoc = await this.collectionRef.doc(addedDoc.id).get();
       if (afterDoc) {
-        return afterDoc.data();
+        return { id: addedDoc.id, ...afterDoc.data() };
       } else {
         return false;
       }
