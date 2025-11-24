@@ -15,9 +15,6 @@ function checkCombinationAndCount(combinationNumber, arr) {
     case "5":
       arr[4] = arr[4] + 1;
       break;
-    case "6":
-      arr[5] = arr[5] + 1;
-      break;
   }
 }
 

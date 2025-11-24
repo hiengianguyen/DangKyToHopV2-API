@@ -271,8 +271,8 @@ class CombinationController {
   async chart(req, res, next) {
     if (req?.cookies?.isLogin === "true" && req?.cookies?.userId) {
       let length;
-      const countCombinaton1 = [0, 0, 0, 0, 0, 0];
-      const countCombinaton2 = [0, 0, 0, 0, 0, 0];
+      const countCombinaton1 = [0, 0, 0, 0, 0];
+      const countCombinaton2 = [0, 0, 0, 0, 0];
       let [data, combinations] = await Promise.all([this.registeredCombinationsDbRef.getAllItems(), this.combinationDbRef.getAllItems()]);
       length = data.length;
       combinations.sort((a, b) => (a.name > b.name ? 1 : -1));
