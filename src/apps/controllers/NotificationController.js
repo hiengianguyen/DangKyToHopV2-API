@@ -17,6 +17,8 @@ class NotificationController {
   async index(req, res, next) {
     if (req?.cookies?.isLogin === "true") {
       const userId = req?.cookies?.userId;
+      const role = req.query.role;
+
       let [notifications, notiSubmittedStatus] = await Promise.all([
         this.notiDBRef.getAllItems({
           fieldName: "publishAt",
@@ -26,7 +28,7 @@ class NotificationController {
       ]);
       const publishAt = notiSubmittedStatus?.publishAt;
 
-      if (notiSubmittedStatus?.notificationId) {
+      if (notiSubmittedStatus?.notificationId && role !== "manager") {
         notiSubmittedStatus = await this.notiDBRef.getItemById(notiSubmittedStatus.notificationId);
         if (notiSubmittedStatus) {
           notiSubmittedStatus.publishAt = publishAt;
@@ -37,7 +39,7 @@ class NotificationController {
       return res.json({
         isSuccess: true,
         notiSubmittedStatus: notiSubmittedStatus,
-        notifications: [...notifications],
+        notifications: notifications,
         role: req?.cookies?.role
       });
     } else {
